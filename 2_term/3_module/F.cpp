@@ -1,4 +1,4 @@
-// Поиск MinCut'a за O(n^2) с помощью Форда-Фалкерсона
+// Поиск MinCut'a с помощью Форда-Фалкерсона
 #include <iostream>
 #include <vector>
 #include <stack>
