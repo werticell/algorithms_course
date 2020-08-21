@@ -25,9 +25,9 @@ int DFS(int u, vector<vector<int>>& graph, vector<Node>& nodes) {
     myStack.push(u);
     vector<colour> status(nodes.size(), WHITE);
 
-    while(!myStack.empty()) {
+    while (!myStack.empty()) {
         int currentVertex = myStack.top();
-        if(graph[currentVertex].empty()) { //оказались в вершине у которой нет детей
+        if (graph[currentVertex].empty()) { //оказались в вершине у которой нет детей
             ++nodes[currentVertex].count;
             status[currentVertex] = GREY;
             myStack.pop();
@@ -35,18 +35,18 @@ int DFS(int u, vector<vector<int>>& graph, vector<Node>& nodes) {
         else {
             for (const auto& v : graph[currentVertex]) {
 
-                if(status[v] == WHITE) {
+                if (status[v] == WHITE) {
                     myStack.push(v);
                     break;
                 }
 
-                if( status[v] == GREY ) {
+                if (status[v] == GREY) {
                     nodes[currentVertex].destination += nodes[v].destination + nodes[v].count;
                     nodes[currentVertex].count += nodes[v].count;
                     status[v] = BLACK;
                 }
 
-                if(status[v] == BLACK && v == graph[currentVertex].back()) {
+                if (status[v] == BLACK && v == graph[currentVertex].back()) {
                     ++nodes[currentVertex].count;
                     status[myStack.top()] = GREY;
                     myStack.pop();

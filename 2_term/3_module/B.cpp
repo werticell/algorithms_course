@@ -1,0 +1,91 @@
+// Алгоритм Крускала
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using std::vector;
+using std::cin;
+using std::cout;
+
+class DSU {
+public:
+
+    explicit DSU(int size);
+
+    int getDelegate(int vertex);
+    void tryUnion(int first, int second);
+private:
+    vector<int> parent;
+    vector<int> rank;
+};
+
+DSU::DSU (int size) {
+    rank.resize(size, 1);
+    for(int i = 0; i < size; ++i) {
+        parent.push_back(i);
+    }
+}
+
+int DSU::getDelegate(int vertex) {
+    if(parent[vertex] == vertex)
+        return vertex;
+    else
+        return parent[vertex] = getDelegate(parent[vertex]);
+}
+
+void DSU::tryUnion(int first, int second) {
+    first = getDelegate(first);
+    second = getDelegate(second);
+
+    if(rank[first] < rank[second])
+        std::swap(first, second);
+    parent[second] = first;
+    rank[first] += rank[second];
+}
+
+
+struct Edge {
+    Edge(int from, int to, int weight) : from(from), to(to), weight(weight) {}
+    int from;
+    int to;
+    int weight;
+};
+
+
+
+
+vector<Edge> kruscal(vector<Edge>& edgeList, int vertexCount) {
+    std::sort(edgeList.begin(), edgeList.end(), [](const Edge& e1, const Edge& e2){ return e1.weight < e2.weight;});
+    DSU components(vertexCount);
+    vector<Edge> resultMST;
+
+    for(auto& new_edge : edgeList) {
+        if(components.getDelegate(new_edge.to) != components.getDelegate(new_edge.from)) {
+            resultMST.push_back(new_edge);
+            components.tryUnion(new_edge.from, new_edge.to);
+        }
+    }
+    return resultMST;
+}
+
+
+long long findMSTWeight(const vector<Edge>& edgeList) {
+    long long result = 0;
+    for(auto& new_edge : edgeList)
+        result += new_edge.weight;
+    return result;
+}
+
+int main() {
+    int n = 0, m = 0;
+    cin >> n >> m;
+    int from = 0, to = 0, weight = 0;
+    vector<Edge> edgeList;
+    for(int i = 0; i < m; ++i) {
+        cin >> from >> to >> weight;
+        edgeList.emplace_back(from - 1, to - 1, weight);
+    }
+
+    cout << findMSTWeight(kruscal(edgeList, n));
+    return 0;
+}
+
