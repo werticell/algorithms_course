@@ -6,7 +6,7 @@
 ### Первый семестр
 Тематика заданий по модулям первого семестра([задания](./1_term/README.md)):
 1. ***Введение, базовые структуры данных(stack, queue, priority_queue).***
-2. ***Сортировки(k-stat, qsort, merge_sort, radix_sort, quadratic).***
+2. ***Сортировки(quadratic sorts, k-stat, qsort, merge_sort, radix_sort).***
 3. ***Деревья поиска(обычное бинарное, декартово дерево, avl).***
 4. ***Hash table, динамика, жадность.***
 
